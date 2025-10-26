@@ -3,7 +3,7 @@
 #include <fcntl.h>
 #include <glob.h>
 #include <sys/types.h>
-
+#include <unistd.h>
 
 GDBusConnection *dbus_connect(bool system_bus, bool log_error) {
   g_autoptr(GError) error = NULL;
@@ -55,6 +55,7 @@ bool session_valid_for_unlock(GDBusConnection *system_conn, const gchar *session
     guint32 check_uid, guint32 *out_uid_ptr, bool *is_wayland_ptr, gchar **display_ptr,
     gchar **scope_ptr) {
   g_autoptr(GError) error = NULL;
+  sleep(3);
   // get all properties of the session
   g_autoptr(GVariant) session_props = g_dbus_connection_call_sync(system_conn, LOGIN_OBJECT_NAME,
       session_path, DBUS_MAIN_OBJECT_NAME ".Properties", "GetAll",
